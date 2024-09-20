@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class UsersInfoController extends Controller
 {
     public function index(){
-       $users = UsersInfo::orderBy('firstname')->paginate(10);
+       $users = UsersInfo::paginate(10);
 
         return view('pagination', compact('users'));
     }

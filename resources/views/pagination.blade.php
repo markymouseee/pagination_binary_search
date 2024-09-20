@@ -62,12 +62,13 @@
                             <i class="bi bi-trash"></i>
                         </button>
                     </th>
-                    <th scope="col"><button class="btn btn-success"><i class="bi bi-pencil-square"></i></button></th>
+                    <th scope="col"><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#updateModal"><i class="bi bi-pencil-square"></i></button></th>
                 </tr>
             @endforeach
         </tbody>
     </table>
         @extends('components.delete-alert')
+        @extends('components.update-alert')
         <div class="d-flex justify-content-center my-4">
             <nav aria-label="Page navigation">
                 <ul class="pagination">

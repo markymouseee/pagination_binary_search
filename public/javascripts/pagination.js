@@ -16,6 +16,7 @@ $(document).ready(function(){
         const query = $("#search_user").val().trim();
 
         if(query === ''){
+            $("#display_search_result").html(`<span class="alert alert-danger p-1">Nothing to search</span>`);
             loadPaginatedUsers();
         }else{
 
