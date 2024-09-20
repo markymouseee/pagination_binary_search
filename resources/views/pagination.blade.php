@@ -17,7 +17,7 @@
                 <h2 class="fs-2 text-center">USERS TABLE</h2>
                 <div class="d-flex">
                     <input type="text" id="search_user" class="form-control w-100" placeholder="Search Users....">
-                    <button id="search_button" class="btn btn-success ms-1 w-50"><i class="bi bi-search"></i> Search</button>
+                    <button id="search_button" class="btn btn-success ms-1 w-50" type="button"><i class="bi bi-search"></i> Search</button>
                 </div>
                 <div class=" d-flex justify-content-center mt-2" id="display_search_result">
 
