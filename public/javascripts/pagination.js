@@ -9,6 +9,15 @@ $(document).ready(function () {
     });
 });
 
+$(document).ready(function() {
+    $('#sort_users').change(function() {
+        const sortBy = $(this).val();
+
+        window.location.href = `?sort=${sortBy}`;
+    });
+});
+
+
 $(document).ready(function(){
     loadPaginatedUsers();
 

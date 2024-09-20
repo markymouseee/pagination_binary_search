@@ -19,8 +19,13 @@
                     <input type="text" id="search_user" class="form-control w-100" placeholder="Search Users....">
                     <button id="search_button" class="btn btn-success ms-1 w-50" type="button"><i class="bi bi-search"></i> Search</button>
                 </div>
+                <div class="d-flex mb-2">
+                    <select id="sort_users" class="form-select" aria-label="Sort Users">
+                        <option selected value="id_asc" {{ request('sort') == 'id_asc' ? 'selected' : '' }}>Sort by ID</option>
+                        <option value="firstname_asc" {{ request('sort') == 'firstname_asc' ? 'selected' : '' }}>Sort by Firstname (A-Z)</option>
+                    </select>
+                </div>
                 <div class=" d-flex justify-content-center mt-2" id="display_search_result">
-
                 </div>
 
                 <div class="text-center">
@@ -81,7 +86,7 @@
                         </li>
                     @else
                         <li class="page-item">
-                            <a class="page-link" href="{{ $users->previousPageUrl() }}" aria-label="Previous">
+                            <a class="page-link" href="{{ $users->previousPageUrl() . '&sort=' . request('sort') }}" aria-label="Previous">
                                 <i class="bi bi-arrow-left"></i> Previous
                             </a>
                         </li>
@@ -89,18 +94,16 @@
 
                     {{-- Pagination Elements --}}
                     @foreach ($users->links()->elements as $element)
-                        {{-- "Three Dots" Separator --}}
                         @if (is_string($element))
                             <li class="page-item disabled"><span class="page-link">{{ $element }}</span></li>
                         @endif
 
-                        {{-- Array Of Links --}}
                         @if (is_array($element))
                             @foreach ($element as $page => $url)
                                 @if ($page == $users->currentPage())
                                     <li class="page-item active"><span class="page-link">{{ $page }}</span></li>
                                 @else
-                                    <li class="page-item"><a class="page-link" href="{{ $url }}">{{ $page }}</a></li>
+                                    <li class="page-item"><a class="page-link" href="{{ $url . '&sort=' . request('sort') }}">{{ $page }}</a></li>
                                 @endif
                             @endforeach
                         @endif
@@ -109,7 +112,7 @@
                     {{-- Next Page Link --}}
                     @if ($users->hasMorePages())
                         <li class="page-item">
-                            <a class="page-link" href="{{ $users->nextPageUrl() }}" aria-label="Next">
+                            <a class="page-link" href="{{ $users->nextPageUrl() . '&sort=' . request('sort') }}" aria-label="Next">
                                 Next <i class="bi bi-arrow-right"></i>
                             </a>
                         </li>

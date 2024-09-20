@@ -7,8 +7,20 @@ use Illuminate\Http\Request;
 
 class UsersInfoController extends Controller
 {
-    public function index(){
-       $users = UsersInfo::paginate(10);
+    public function index(Request $request){
+       $query = UsersInfo::query();
+
+
+       if ($request->has('sort')) {
+        $sort = $request->get('sort');
+        if ($sort === 'id_asc') {
+            $query->orderBy('id', 'asc');
+        } elseif ($sort === 'firstname_asc') {
+            $query->orderBy('firstname', 'asc');
+        }
+    }
+
+        $users = $query->paginate(10);
 
         return view('pagination', compact('users'));
     }
