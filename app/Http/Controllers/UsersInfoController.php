@@ -10,7 +10,6 @@ class UsersInfoController extends Controller
     public function index(Request $request){
        $query = UsersInfo::query();
 
-
        if ($request->has('sort')) {
         $sort = $request->get('sort');
         if ($sort === 'id_asc') {

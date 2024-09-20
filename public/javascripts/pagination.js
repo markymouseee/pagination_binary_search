@@ -31,7 +31,7 @@ $(document).ready(function(){
 
         $.ajax({
             url: `/api/search-users`,
-            type: 'GET',
+            type: 'POST',
             data: { "search-users": query },
             success: function(users){
                 let rows = '';

@@ -19,7 +19,7 @@
                     <input type="text" id="search_user" class="form-control w-100" placeholder="Search Users....">
                     <button id="search_button" class="btn btn-success ms-1 w-50" type="button"><i class="bi bi-search"></i> Search</button>
                 </div>
-                <div class="d-flex mb-2">
+                <div class="d-flex mb-2 mt-2">
                     <select id="sort_users" class="form-select" aria-label="Sort Users">
                         <option selected value="id_asc" {{ request('sort') == 'id_asc' ? 'selected' : '' }}>Sort by ID</option>
                         <option value="firstname_asc" {{ request('sort') == 'firstname_asc' ? 'selected' : '' }}>Sort by Firstname (A-Z)</option>
