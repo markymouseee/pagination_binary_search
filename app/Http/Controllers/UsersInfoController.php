@@ -8,17 +8,17 @@ use Illuminate\Http\Request;
 class UsersInfoController extends Controller
 {
     public function index(){
-       $users = UsersInfo::paginate(10);
+       $users = UsersInfo::orderBy('firstname')->paginate(10);
 
         return view('pagination', compact('users'));
     }
 
     public function search(Request $request){
-        $query = $request->input('query');
+        $query = $request->input('search-users');
 
-        $users = UsersInfo::where('firstname', 'LIKE', '%{query}%')
-                    ->orWhere('lastname', 'LIKE', '%{queryt}%')
-                    ->orWhere('email', 'LIKE', '%query%')->get();
+        $users = UsersInfo::where('firstname', 'LIKE', "%{$query}%")
+                    ->orWhere('lastname', 'LIKE', "%{$query}%")
+                    ->orWhere('email', 'LIKE', "%{$query}%")->get();
 
                     return response()->json($users);
 

@@ -25,7 +25,7 @@ class UsersInfoFactory extends Factory
             'lastname' => $this->faker->lastName,
             'email' => $this->faker->unique()->safeEmail,
             'contact' => $this->faker->phoneNumber,
-            'address' => $this->faker->address,
+            'address' => $this->faker->address
         ];
     }
 }
