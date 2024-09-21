@@ -38,6 +38,7 @@ $(document).ready(function(){
 
                 if(users.length === 0){
                     $("#display_search_result").html(`<span class="alert alert-danger p-1">User Not Found</span>`);
+
                 }else{
                     $("#display_search_result").html(`<span></span>`);
                     $.each(users, function(index, user){
