@@ -51,24 +51,24 @@
         </thead>
         <tbody>
             @foreach ($users as $user)
-                <tr>
-                    <th scope="row">{{$user->id}}</th>
-                    <td>{{ $user->firstname }}</td>
-                    <td>{{ $user->lastname }}</td>
-                    <td class="text-primary">{{ $user->email }}</td>
-                    <td>{{ $user->contact }}</td>
-                    <td>{{ $user->address }}</td>
-                    <th scope="col">
-                        <button class="btn btn-danger"
-                                data-bs-toggle="modal"
-                                data-bs-target="#deleteModal"
-                                data-user-firstname="{{ $user->firstname }}"
-                                data-user-lastname="{{ $user->lastname }}">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </th>
-                    <th scope="col"><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#updateModal"><i class="bi bi-pencil-square"></i></button></th>
-                </tr>
+            <tr>
+                <th scope="row">{{$user->id}}</th>
+                <td>{{ $user->firstname }}</td>
+                <td>{{ $user->lastname }}</td>
+                <td class="text-primary">{{ $user->email }}</td>
+                <td>{{ $user->contact }}</td>
+                <td>{{ $user->address }}</td>
+                <th scope="col">
+                    <button class="btn btn-danger"
+                            data-bs-toggle="modal"
+                            data-bs-target="#deleteModal"
+                            data-user-firstname="{{ $user->firstname }}"
+                            data-user-lastname="{{ $user->lastname }}">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </th>
+                <th scope="col"><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#updateModal"><i class="bi bi-pencil-square"></i></button></th>
+            </tr>
             @endforeach
         </tbody>
     </table>

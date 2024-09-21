@@ -21,8 +21,8 @@ $(document).ready(function() {
 $(document).ready(function(){
     loadPaginatedUsers();
 
-    $("#search_button").on('click', function(){
-        const query = $("#search_user").val().trim();
+    $("#search_user").on('keyup', function(){
+        const query = $(this).val().trim();
 
         if(query === ''){
             $("#display_search_result").html(`<span class="alert alert-danger p-1">Nothing to search</span>`);
