@@ -10,4 +10,4 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::post('/bst/insert', [BinarySearchTreeController::class, 'insert']);
-Route::post('/search-users', [UsersInfoController::class, 'search']);
+Route::get('/search-users', [UsersInfoController::class, 'search']);
