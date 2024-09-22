@@ -1,4 +1,54 @@
 $(document).ready(function () {
+    // Detect input in the search field
+    $('#search_user').on('input', function () {
+        let query = $(this).val();
+
+        // If input is not empty, make an AJAX call
+        if (query.length > 1) {
+            $.ajax({
+                url: '/api/search-users', // Your API endpoint
+                method: 'GET',
+                data: { "search-users": query },
+                success: function (response) {
+                    let suggestions = $('#suggestions');
+                    suggestions.empty(); // Clear previous suggestions
+
+                    // Display suggestions
+                    response.forEach(function (user) {
+                        suggestions.append(
+                            `<a href="#" class="list-group-item list-group-item-action">${user.firstname} ${user.lastname}</a>`
+                        );
+                    });
+                },
+                error: function (xhr) {
+                    console.error('Error fetching suggestions:', xhr);
+                }
+            });
+        } else {
+            // Clear suggestions if input is empty
+            $('#suggestions').empty();
+        }
+    });
+
+    // Handle click on suggestion
+    $('#suggestions').on('click', 'a', function (e) {
+        e.preventDefault();
+        let selectedText = $(this).text();
+        $('#search_user').val(selectedText);
+        $('#suggestions').empty(); // Clear suggestions after selection
+    });
+
+    // Hide suggestions when clicking outside
+    $(document).click(function (e) {
+        if (!$(e.target).closest('#search_user, #suggestions').length) {
+            $('#suggestions').empty();
+        }
+    });
+});
+
+
+
+$(document).ready(function () {
     $('#deleteModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var firstname = button.data('user-firstname');
@@ -21,8 +71,8 @@ $(document).ready(function() {
 $(document).ready(function(){
     loadPaginatedUsers();
 
-    $("#search_user").on('keyup', function(){
-        const query = $(this).val().trim();
+    $("#search_button").on('click', function(){
+        const query = $("#search_user").val().trim();
 
         if(query === ''){
             $("#display_search_result").html(`<span class="alert alert-danger p-1">Nothing to search</span>`);
@@ -31,7 +81,7 @@ $(document).ready(function(){
 
         $.ajax({
             url: `/api/search-users`,
-            type: 'POST',
+            type: 'GET',
             data: { "search-users": query },
             success: function(users){
                 let rows = '';
