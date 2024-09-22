@@ -25,64 +25,76 @@ class UsersInfoController extends Controller
     }
 
     public function search(Request $request){
-        $query = $request->input('search-users');
+        $query = $request->input("search-users");
 
-        $users = UsersInfo::where('firstname', 'LIKE', "%{$query}%")
-                    ->orWhere('lastname', 'LIKE', "%{$query}%")
-                    ->orWhere('email', 'LIKE', "%{$query}%")->get();
+        $usersArray = $this->getUsersArray();
 
-                    return response()->json($users);
+        $result = $this->findMatches($query, $usersArray);
 
-        // $users = UsersInfo::orderBy('firstname')->get();
-
-        // if(empty($query)){
-        //     return response()->json($users);
-        // }
-
-        // $result = $this->binarySearch($users, $query);
-
-        // return response()->json($result);
+        return response()->json(array_slice($result, 0, 10));
 
     }
 
+    private function getUsersArray(){
+        return UsersInfo::orderBy('firstname')->orderBy('lastname')->get()->toArray();
+    }
 
-            //Binary Search Algorithm
-    // private function binarySearch($users, $query){
+    private function findMatches($query, $usersArray){
+        $terms = array_map('trim', explode(' ', $query));
+        $result = [];
 
-    //     $start_index = 0;
-    //     $end_index = count($users) - 1;
-    //     $result = [];
+        foreach($terms as $term){
+            $matches = $this->binarySearch($usersArray, $term);
+            $result = array_merge($result, $matches);
+        }
 
-    //     while($start_index <= $end_index){
-    //         $middle_index = (int)(($start_index + $end_index) / 2);
+        if(trim($query) !== ''){
+            $exactMatches = array_filter($usersArray, function($user) use ($query){
+                return stripos("{$user['firstname']} {$user['lastname']}", $query) !== false;
+            });
 
-    //         $currentName = strtolower($users[$middle_index]->firstName);
+            $result = array_merge($result, array_values($exactMatches));
+        }
 
-    //         if(strpos($currentName, $query) !== false){
-    //             $result[] = $users[$middle_index];
+        return array_map("unserialize", array_unique(array_map("serialize", $result)));
+    }
 
-    //             $left = $middle_index - 1;
+    private function binarySearch(array $users, string $query){
+        $low = 0;
+        $high = count($users) - 1;
+        $matches = [];
 
-    //             while($left >= 0 && strpos(strtolower($users[$left]->firstname), $query) !== false){
-    //                 array_unshift($result, $users[$left]);
-    //                 $left--;
-    //             }
+        while ($low <= $high) {
+            $mid = floor(($low + $high) / 2);
+            $compareValue = "{$users[$mid]['firstname']} {$users[$mid]['lastname']}";
 
-    //             $right = $middle_index + 1;
+            // Check if the search query matches
+            if (stripos($compareValue, $query) !== false) {
+                // If a match is found, collect matches from the middle outwards
+                $matches[] = $users[$mid];
 
-    //             while($right < count($users) && strpos(strtolower($users[$right]->firstName), $query) !== false){
-    //                 $result[] = $users[$right];
-    //                 $right++;
-    //             }
+                // Search left
+                $left = $mid - 1;
+                while ($left >= 0 && stripos("{$users[$left]['firstname']} {$users[$left]['lastname']}", $query) !== false) {
+                    $matches[] = $users[$left];
+                    $left--;
+                }
 
-    //             break;
-    //         }elseif($currentName < $query){
-    //             $start_index = $middle_index + 1;
-    //         }else{
-    //             $end_index = $middle_index - 1;
-    //         }
-    //     }
+                // Search right
+                $right = $mid + 1;
+                while ($right < count($users) && stripos("{$users[$right]['firstname']} {$users[$right]['lastname']}", $query) !== false) {
+                    $matches[] = $users[$right];
+                    $right++;
+                }
 
-    //     return $result;
-    // }
+                break; // Exit the loop after finding matches
+            } elseif ($compareValue < $query) {
+                $low = $mid + 1; // Move to the right half
+            } else {
+                $high = $mid - 1; // Move to the left half
+            }
+        }
+
+        return $matches; // Return collected matches
+    }
 }
