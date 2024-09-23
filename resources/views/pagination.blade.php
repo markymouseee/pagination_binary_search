@@ -17,9 +17,10 @@
                 <h2 class="fs-2 text-center">USERS TABLE</h2>
                 <div class="d-flex">
                     <input type="text" id="search_user" class="form-control w-100" placeholder="Search Users....">
-                    <div id="suggestions" class="list-group position-absolute w-auto" style="top: 9.3rem;"></div>
+
                     <button id="search_button" class="btn btn-success ms-1 w-50" type="button"><i class="bi bi-search"></i> Search</button>
                 </div>
+                <div id="suggestions" class="list-group position-absolute w-auto bg-black" style="top: 9.3rem;"></div>
                 <div class="d-flex mb-2 mt-2">
                     <select id="sort_users" class="form-select" aria-label="Sort Users">
                         <option selected value="id_asc" {{ request('sort') == 'id_asc' ? 'selected' : '' }}>Sort by ID</option>
@@ -28,7 +29,6 @@
                 </div>
                 <div class=" d-flex justify-content-center mt-2" id="display_search_result">
                 </div>
-
                 <div class="text-center">
                     <span class="fs-6 badge rounded-pill text-bg-danger">
                         Total Users: {{ count($users) }}
@@ -37,7 +37,7 @@
             </div>
         </div>
         <hr>
-    <table class="table table-condensed">
+    <table class="table table-condensed table-bordered">
         <thead>
             <tr class="table-primary">
                 <th scope="col">#</th>

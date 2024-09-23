@@ -25,7 +25,24 @@ class UsersInfoController extends Controller
     }
 
     public function search(Request $request){
-        $query = $request->input("search-users");
+        // $query = trim($request->input('search-users'));
+
+
+        // if (empty($query)) {
+        //     return response()->json([]);
+        // }
+
+        // // Fetch users with a query that searches within firstname and lastname
+        // $users = UsersInfo::whereRaw("CONCAT(firstname, ' ', lastname) LIKE ?", ["%{$query}%"])
+        //     ->orderBy('firstname')
+        //     ->orderBy('lastname')
+        //     ->limit(10)
+        //     ->get();
+
+        // return response()->json($users);
+
+
+        $query = $request->input('search-users');
 
         $usersArray = $this->getUsersArray();
 

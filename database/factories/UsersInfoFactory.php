@@ -21,11 +21,11 @@ class UsersInfoFactory extends Factory
     public function definition(): array
     {
         return [
-            'firstname' => $this->faker->firstName,
-            'lastname' => $this->faker->lastName,
-            'email' => $this->faker->unique()->safeEmail,
-            'contact' => $this->faker->phoneNumber,
-            'address' => $this->faker->address
+            'firstname' => $this->faker->firstName(),
+            'lastname' => $this->faker->lastName(),
+            'email' => $this->faker->unique()->email(),
+            'contact' => $this->faker->phoneNumber(),
+            'address' => $this->faker->address()
         ];
     }
 }
